@@ -1,4 +1,6 @@
-ARG KEYCLOAK_VERSION=19.0.3-legacy
+ARG KEYCLOAK_VERSION=23.0.1
 
 FROM quay.io/keycloak/keycloak:${KEYCLOAK_VERSION}
-ADD https://github.com/sventorben/keycloak-home-idp-discovery/releases/download/v19.1.0/keycloak-home-idp-discovery.jar /opt/jboss/keycloak/standalone/deployments/keycloak-home-idp-discovery.jar
+ADD --chown=keycloak:keycloak https://github.com/sventorben/keycloak-home-idp-discovery/releases/download/v23.0.0/keycloak-home-idp-discovery.jar /opt/keycloak/providers/keycloak-home-idp-discovery.jar
+
+RUN /opt/keycloak/bin/kc.sh build
