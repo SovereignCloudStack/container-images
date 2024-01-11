@@ -19,12 +19,12 @@ docker tag "$REPOSITORY:$REVISION" "$REPOSITORY:$VERSION"
 
 # TODO: this really needs review
 # push e.g. scs/keycloak:19.0.3
-if [[ $IMAGE == "keycloak" ]]; then
+if [[ $IMAGE == "scs-keycloak" ]]; then
     version=$(docker run --rm "$REPOSITORY:$VERSION" keycloak --version | awk '{ print $2 }')
-    if skopeo inspect --creds "${DOCKER_USERNAME}:${DOCKER_PASSWORD}" "docker://${REPOSITORY}:${version}" > /dev/null; then
-        echo "The image ${REPOSITORY}:${version} already exists."
+    if skopeo inspect --creds "${DOCKER_USERNAME}:${DOCKER_PASSWORD}" "docker://${REPOSITORY}:${VERSION}" > /dev/null; then
+        echo "The image ${REPOSITORY}:${VERSION} already exists."
     else
-        docker tag "$REPOSITORY:$REVISION" "$REPOSITORY:$version"
-        docker push "$REPOSITORY:$version"
+        docker tag "$REPOSITORY:$REVISION" "$REPOSITORY:$VERSION"
+        docker push "$REPOSITORY:$VERSION"
     fi
 fi
