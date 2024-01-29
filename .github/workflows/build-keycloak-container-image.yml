@@ -18,12 +18,12 @@ name: Build keycloak container image
 
 jobs:
 
-  build-homer-container-image:
+  build-keycloak-container-image:
     runs-on: ubuntu-latest
     strategy:
       matrix:
         version:
-          - 19.0.3  # Select the correct version / ask what this does
+          - 23.0.3  # Select the correct version / ask what this does
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -43,17 +43,16 @@ jobs:
         run: scripts/build.sh
         env:
           DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-          IMAGE: keycloak
-          REPOSITORY: scs/keycloak
+          IMAGE: scs-keycloak
+          REPOSITORY: scs-container-images/scs-keycloak
           VERSION: ${{ matrix.version }}
 
       - name: Push container image
-        run: |
-          scripts/push.sh
+        run: scripts/push.sh
         env:
           DOCKER_REGISTRY: ${{ secrets.DOCKER_REGISTRY }}
-          IMAGE: keycloak
-          REPOSITORY: scs/keycloak
+          IMAGE: scs-keycloak
+          REPOSITORY: scs-container-images/scs-keycloak
           VERSION: ${{ matrix.version }}
         if: |
           github.repository == 'SovereignCloudStack/container-images' &&
